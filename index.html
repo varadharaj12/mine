@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Be My Valentine 💘</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-family:"Poppins",sans-serif;
+  background:linear-gradient(45deg,#f6c1c7,#f9d6d5,#f6c1c7);
+  overflow:hidden;
+}
+
+.card{
+  width:360px;
+  padding:30px;
+  border-radius:30px;
+  background:#f3ecec;
+  text-align:center;
+  box-shadow:0 20px 50px rgba(0,0,0,0.2);
+  position:relative;
+}
+
+.emoji{
+  font-size:60px;
+  margin-bottom:10px;
+}
+
+h2{
+  font-family:"Playfair Display",serif;
+  font-size:24px;
+  color:#5b2b36;
+  margin-bottom:20px;
+}
+
+/* ===== IMAGE SLIDER ===== */
+
+.slider{
+  width:260px;
+  height:180px;
+  margin:15px auto;
+  overflow:hidden;
+  border-radius:20px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.3);
+  position:relative;
+}
+
+.slides{
+  display:flex;
+  animation: slide 28s infinite;
+}
+
+.slides img{
+  width:260px;
+  height:180px;
+  object-fit:cover;
+  flex-shrink:0;
+}
+
+@keyframes slide{
+  0% { transform: translateX(0); }
+  14% { transform: translateX(-260px); }
+  28% { transform: translateX(-520px); }
+  42% { transform: translateX(-780px); }
+  56% { transform: translateX(-1040px); }
+  70% { transform: translateX(-1300px); }
+  84% { transform: translateX(-1560px); }
+  100% { transform: translateX(0); }
+}
+
+/* ===== BUTTONS ===== */
+
+.buttons{
+  position:relative;
+  height:70px;
+  margin-top:15px;
+}
+
+button{
+  position:absolute;
+  padding:12px 30px;
+  border:none;
+  border-radius:40px;
+  font-size:15px;
+  cursor:pointer;
+}
+
+#yes{
+  left:12%;
+  background:#ff5c77;
+  color:white;
+}
+
+#no{
+  left:55%;
+  background:#e5e5e5;
+  color:#777;
+}
+
+.hint{
+  margin-top:20px;
+  font-size:13px;
+  color:#777;
+  font-style:italic;
+}
+
+/* Floating Hearts */
+
+.heart{
+  position:absolute;
+  bottom:-20px;
+  animation:floatUp linear forwards;
+  pointer-events:none;
+}
+
+@keyframes floatUp{
+  from{
+    transform:translateY(0);
+    opacity:1;
+  }
+  to{
+    transform:translateY(-120vh);
+    opacity:0;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+  <div class="emoji">🐱❤️</div>
+
+  <h2>Roshini,<br>will you be my Valentine? 💕</h2>
+
+  <!-- IMAGE SLIDER -->
+  <div class="slider">
+    <div class="slides">
+      <img src="img1.jpg">
+      <img src="img2.jpg">
+      <img src="img3.jpg">
+      <img src="img4.jpg">
+      <img src="img5.jpg">
+      <img src="img6.jpg">
+      <img src="img7.jpg">
+    </div>
+  </div>
+
+  <div class="buttons">
+    <button id="yes">Yes 💖</button>
+    <button id="no">No 🙈</button>
+  </div>
+
+  <div class="hint">Some love stories don’t allow “no” ✨</div>
+
+</div>
+
+<script>
+
+const noBtn=document.getElementById("no");
+const yesBtn=document.getElementById("yes");
+const card=document.querySelector(".card");
+
+noBtn.addEventListener("mouseenter",()=>{
+  const cardRect=card.getBoundingClientRect();
+  const btnRect=noBtn.getBoundingClientRect();
+
+  const maxX=cardRect.width-btnRect.width-10;
+  const maxY=cardRect.height-btnRect.height-10;
+
+  noBtn.style.left=Math.random()*maxX+"px";
+  noBtn.style.top=Math.random()*maxY+"px";
+});
+
+yesBtn.addEventListener("click",()=>{
+  confetti({
+    particleCount:250,
+    spread:120,
+    origin:{y:0.6}
+  });
+
+  setTimeout(()=>{
+    alert("Roshini 💖 You just made me the happiest person alive! I love you ❤️");
+  },500);
+});
+
+/* Floating Hearts */
+
+function createHeart(){
+  const heart=document.createElement("div");
+  heart.className="heart";
+  heart.innerHTML=Math.random()>0.5?"❤️":"💗";
+  heart.style.left=Math.random()*100+"vw";
+  heart.style.fontSize=Math.random()*20+15+"px";
+  heart.style.animationDuration=Math.random()*3+4+"s";
+
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(),8000);
+}
+
+setInterval(createHeart,400);
+
+</script>
+
+</body>
+</html>
